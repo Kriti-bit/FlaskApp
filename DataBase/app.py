@@ -1,4 +1,3 @@
-# Store this code in 'app.py' file
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
@@ -57,12 +56,14 @@ def register():
 
 @app.route("/index")
 def index():
-    pass
+    if 'loggedin' in session:
+        return render_template("index.html")
+    return redirect(url_for('login'))
 
 
 @app.route("/display")
 def display():
-    pass
+    return redirect(url_for('login'))
 
 
 if __name__ == "__main__":
