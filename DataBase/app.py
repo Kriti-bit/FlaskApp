@@ -56,13 +56,17 @@ def register():
 
 @app.route("/index")
 def index():
-    if 'loggedin' in session:
-        return render_template("index.html")
-    return redirect(url_for('login'))
+    pass
 
 
 @app.route("/display")
 def display():
+    if 'loggedin' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM accounts WHERE id = % s',
+                       (session['id'], ))
+        account = cursor.fetchone()
+        return render_template("display.html", account=account)
     return redirect(url_for('login'))
 
 
